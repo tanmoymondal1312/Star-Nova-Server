@@ -3,7 +3,7 @@ import os
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = os.getenv("DJANGO_SECRET_KEY", "unsafe-dev-key")
+SECRET_KEY = "django-insecure-8n7&qec9%waw#(^ywra)qvadey8jpi!52t5e44#wa$+4m5c^5#"
 
 INSTALLED_APPS = [
     'django.contrib.admin',
