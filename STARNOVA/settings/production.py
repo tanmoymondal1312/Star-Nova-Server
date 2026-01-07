@@ -6,6 +6,9 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'starnova.itpoint.us',
     'www.starnova.itpoint.us',
+    "127.0.0.1",
+    "localhost",
+    "31.97.233.191",
 ]
 
 DATABASES = {
