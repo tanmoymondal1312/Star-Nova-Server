@@ -20,10 +20,10 @@ DATABASES = {
 }
 
 STATIC_URL = '/static/'
-STATIC_ROOT = '/var/www/QUIZ_SERVER/static'
+STATIC_ROOT = '/var/www/STARNOVA/static'
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = '/var/www/QUIZ_SERVER/media'
+MEDIA_ROOT = '/var/www/STARNOVA/media'
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SESSION_COOKIE_SECURE = True
