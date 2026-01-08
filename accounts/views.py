@@ -1,16 +1,22 @@
 import random
 import string
 from django.contrib.auth.models import User
-from rest_framework.authtoken.models import Token
+from .models import UserData
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .models import UserData
+from rest_framework.authtoken.models import Token
 
 def generate_random_password(length=8):
     """Generate a random password with letters and digits"""
     letters_and_digits = string.ascii_letters + string.digits
     return ''.join(random.choice(letters_and_digits) for i in range(length))
+
+def generate_temporary_username():
+    """Generate a unique temporary username"""
+    prefix = "user_"
+    suffix = ''.join(random.choice(string.digits) for _ in range(6))
+    return prefix + suffix
 
 @api_view(['POST'])
 def login(request):
@@ -20,16 +26,27 @@ def login(request):
     if not phone:
         return Response({"error": "Phone number is required"}, status=status.HTTP_400_BAD_REQUEST)
 
-    # Check if user exists
     user_created = False
+    password = None
+    
+    # Check if there's any UserData with this phone number
     try:
-        user = User.objects.get(username=phone)
-        # User exists, no need to authenticate with password
-        password = None
-    except User.DoesNotExist:
-        # User doesn't exist → create new
+        # Try to find existing user with this phone number
+        user_data = UserData.objects.get(mobile_number=phone)
+        user = user_data.user
+        password = "Already set"
+    except UserData.DoesNotExist:
+        # Create new user with temporary username
+        username = generate_temporary_username()
+        
+        # Ensure username is unique
+        while User.objects.filter(username=username).exists():
+            username = generate_temporary_username()
+        
         password = generate_random_password()
-        user = User.objects.create_user(username=phone, password=password)
+        user = User.objects.create_user(username=username, password=password)
+        
+        # Create UserData with the phone number
         UserData.objects.create(user=user, mobile_number=phone, is_paid=False)
         user_created = True
 
@@ -38,8 +55,9 @@ def login(request):
 
     return Response({
         "token": token.key,
-        "name": user.username,
-        "password": password if user_created else "Already set"  # Show password only if newly created
+        "username": user.username,
+        "password": password if user_created else "Already set",
+        "phone": phone
     }, status=status.HTTP_200_OK)
 
 
