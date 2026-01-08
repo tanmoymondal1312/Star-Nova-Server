@@ -55,9 +55,6 @@ def login(request):
 
     return Response({
         "token": token.key,
-        "username": user.username,
-        "password": password if user_created else "Already set",
-        "phone": phone
     }, status=status.HTTP_200_OK)
 
 
