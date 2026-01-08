@@ -1,5 +1,4 @@
 from .base import *
-import os
 
 DEBUG = True
 
@@ -14,9 +13,9 @@ ALLOWED_HOSTS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.getenv('DB_NAME'),
-        'USER': os.getenv('DB_USER'),
-        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'NAME': 'starnova_db',
+        'USER': 'starnova_user',
+        'PASSWORD': '456789ladnom',
         'HOST': 'localhost',
         'PORT': '5432',
     }
