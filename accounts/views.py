@@ -118,7 +118,7 @@ def get_and_set_user_data(request):
             return Response({"error": "Age must be a number"}, status=status.HTTP_400_BAD_REQUEST)
     if 'classification' in data:
         user_data.classification = data['classification']
-    user_data.mobile_number = user.mobile_number 
+    user_data.mobile_number = user.phone 
     user_data.save()
 
     # 5️⃣ Return JSON response
