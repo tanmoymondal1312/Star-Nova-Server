@@ -26,6 +26,7 @@ class UserData(models.Model):
     language = models.CharField(
         max_length=2,
         choices=LANGUAGE_CHOICES,
+        blank=True, null=True
     )
 
     name = models.CharField(max_length=255, blank=True, null=True)
