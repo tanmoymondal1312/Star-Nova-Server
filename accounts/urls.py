@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import get_and_set_user_data, login, varify_number
+from .views import login, varify_number
 
 urlpatterns = [
     path('api/login', login, name='login'),
