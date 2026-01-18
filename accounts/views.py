@@ -67,7 +67,6 @@ def login(request):
             "experience_level": user_data.experience_level,
             "age": user_data.age,
             "classification": user_data.classification,
-            "profile_completed": profile_completed,
         }
     
     return Response(response_data, status=status.HTTP_200_OK)
@@ -139,8 +138,8 @@ def get_and_set_user_data(request):
     return Response({
         "message": "User data updated successfully",
         "user_data": {
+            "name": user_data.name,
             "language": user_data.language,
-            "name": getattr(user_data, "name", ""),
             "experience_level": user_data.experience_level,
             "age": user_data.age,
             "classification": user_data.classification,
